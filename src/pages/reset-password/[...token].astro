@@ -1,0 +1,57 @@
+---
+// Reset Password page (dynamic route with token)
+import AuthLayout from "@/layouts/AuthLayout.astro";
+---
+
+<AuthLayout title="Reset Password">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>Set a New Password</h1>
+            <p>Create a new, strong password for your account.</p>
+
+            <form id="reset-password-form" method="post">
+                <div>
+                    <label for="new-password">New Password</label>
+                    <input
+                        type="password"
+                        id="new-password"
+                        name="new-password"
+                        minlength="8"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="confirm-password">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="confirm-password"
+                        name="confirm-password"
+                        required
+                    />
+                </div>
+                <div id="2fa-code-container-reset-password" hidden>
+                    <label for="2fa-code-reset-password">2FA Code</label>
+                    <input
+                        type="text"
+                        id="2fa-code-reset-password"
+                        name="2fa-code-reset-password"
+                        inputmode="numeric"
+                        pattern="[0-9]{6}"
+                        maxlength="6"
+                        placeholder="Enter 6-digit code"
+                    />
+                    <small
+                        >Enter the 6-digit code from your authenticator app.</small
+                    >
+                </div>
+                <div id="turnstile-container"></div>
+                <button type="submit">Reset Password</button>
+                <p id="reset-message"></p>
+            </form>
+
+            <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
+            <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"></script>
+            <script src="https://cdn.mindfulauth.com/astro/reset-password.js"></script>
+        </div>
+    </div>
+</AuthLayout>

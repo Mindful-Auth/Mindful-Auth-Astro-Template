@@ -1,0 +1,28 @@
+---
+import ProtectedLayout from "@/layouts/ProtectedLayout.astro";
+
+const recordId = Astro.locals.recordId;
+
+if (!recordId) {
+    throw new Error("Not authenticated. recordId is missing.");
+}
+
+---
+<ProtectedLayout title="Dashboard">
+<div class="page-content">
+    <section class="content-card">
+        <h2>Secure Dashboard</h2>
+        <p>This is your personalized dashboard at <code>/{recordId}/dashboard</code>.</p>
+        <p>Your Member ID: <code>{recordId}</code></p>
+    </section>
+    
+    <nav class="page-nav">
+        <h3>Quick Links</h3>
+        <ul>
+            <li><a href={`/${recordId}`}>Profile</a></li>
+            <li><a href={`/${recordId}/static-folder/static-page`}>Static Page</a></li>
+            <li><a href={`/${recordId}/some-page/sample`}>Sample Dynamic Page</a></li>
+        </ul>
+    </nav>
+</div>
+</ProtectedLayout>

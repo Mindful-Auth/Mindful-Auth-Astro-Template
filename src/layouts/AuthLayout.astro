@@ -1,0 +1,28 @@
+---
+// Layout for public authentication pages (login, register, etc.)
+import '../styles/global.css';
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description = 'Secure Portal' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={description}>
+    <title>{title}</title>
+    
+    <!-- Mindful Auth main script (handles logout, etc.) DO NOT REMOVE-->
+    <script src="https://cdn.mindfulauth.com/astro/main.js"></script>
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+</head>
+<body>
+    <slot />
+</body>
+</html>

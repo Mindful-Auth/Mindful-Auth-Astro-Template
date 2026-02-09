@@ -1,0 +1,187 @@
+---
+import ProtectedLayout from "@/layouts/ProtectedLayout.astro";
+
+const recordId = Astro.locals.recordId;
+
+if (!recordId) {
+    throw new Error("Not authenticated. recordId is missing.");
+}
+---
+
+<ProtectedLayout title="Profile">
+    <!-- DO NOT DELETE THIS SCRIPT. MINDFUL AUTH CDN NEEDS window.MEMBERID -->
+    <script define:vars={{ recordId }}>
+      window.MEMBERID = recordId;
+    </script>
+  
+    <header>
+      <h1>Profile Settings</h1>
+    </header>
+
+  <!----- DO NOT DELETE THE FOLLOWING SECTIONS. MINDFUL AUTH DEPENDS ON THEM ----->
+  <!----- YOU ARE FREE TO EDIT TEXT, CSS CLASSES AND REARRANGE SECTIONS. DO NOT DELETE OR CHANGE THE ID'S ----->
+
+    <!-- CHANGE PASSWORD -->
+    <section class="content-card">
+      <h2>Change Password</h2>
+      <form id="change-password-form" method="post">
+        <div>
+          <label for="new-password"><b>New Password *</b></label>
+          <small>Password must be at least 8 characters long.</small>
+          <input
+            type="password"
+            id="new-password"
+            name="new-password"
+            minlength="8"
+            required
+          />
+        </div>
+        <div>
+          <label for="confirm-password"><b>Confirm Password *</b></label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            required
+          />
+        </div>
+        <div id="2fa-code-container-change-password" hidden>
+          <label for="2fa-code-change-password"><b>2FA Code *</b></label>
+          <small>Enter the 6-digit code from your authenticator app.</small>
+          <input
+            type="text"
+            id="2fa-code-change-password"
+            name="2fa-code-change-password"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            maxlength="6"
+            placeholder="Enter 6-digit code"
+          />
+        </div>
+        <button type="submit" class="submit-btn">Update Password</button>
+        <div id="change-password-message" class="message"></div>
+      </form>
+    </section>
+  
+  
+    <!-- ENABLE 2FA SECTION -->
+    <section id="enable-2fa-section" class="content-card">
+      <h2>Two-Factor Authentication</h2>
+      <p>Protect your account with an extra layer of security.</p>
+      <button id="enable-2fa-btn" class="submit-btn">Enable 2FA</button>
+    </section>
+  
+    <!-- 2FA SETUP -->
+    <section id="2fa-setup" class="content-card" hidden>
+      <h2>Scan the QR Code</h2>
+      <p>Use an authenticator app like Google Authenticator or 1Password to scan this code.</p>
+      <div class="qr-wrapper">
+        <div id="qr-code-container" class="qr-display"></div>
+      </div>
+      <form id="verify-2fa-form" method="post" class="form-compact">
+        <div class="form-group">
+          <label for="2fa-token"><b>Enter the 6-digit code from your app *</b></label>
+          <small>Look for the 6-digit code in your authenticator app</small>
+          <input
+            id="2fa-token"
+            type="text"
+            placeholder="000000"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            maxlength="6"
+            class="code-input"
+          />
+        </div>
+        <button type="submit" class="submit-btn">Verify &amp; Enable</button>
+      </form>
+    </section>
+  
+    <div id="2fa-message" class="message"></div>
+  
+    <!-- RECOVERY CODES -->
+    <section id="recovery-codes-container" class="content-card security-alert" hidden>
+      <div class="alert-header">
+        <h2>Save Your Recovery Codes</h2>
+        <p>
+          If you lose access to your authenticator app, these codes are the ONLY
+          way to access your account. Store them somewhere safe and private. Each
+          code can only be used once.
+        </p>
+      </div>
+      <div class="codes-display">
+        <ul id="recovery-codes-list" class="recovery-list"></ul>
+      </div>
+      <div class="button-group">
+        <button id="copy-codes-btn" class="submit-btn">Copy Codes</button>
+      </div>
+      <div id="copy-message" class="message"></div>
+    </section>
+  
+    <!-- DISABLE 2FA SECTION -->
+    <section id="disable-2fa-section" class="content-card security-alert alert-danger" hidden>
+      <h2>Disable Two-Factor Authentication</h2>
+        <p>Disabling 2FA will reduce your account security. You will only need your password to log in.</p>
+      <form id="disable-2fa-form" method="post" class="form-compact">
+        <div class="form-group">
+          <label for="disable-password"><b>Enter your current password to confirm *</b></label>
+          <small>Required for security verification</small>
+          <input id="disable-password" type="password" required />
+        </div>
+        <button type="submit" id="disable-2fa-btn" class="submit-btn btn-danger">Disable 2FA</button>
+      </form>
+      <div id="disable-2fa-message" class="message"></div>
+    </section>
+  
+    <!-- ADD AUTHENTICATION METHOD -->
+    <section id="add-auth-section" class="content-card">
+      <h2>Add Authentication Method</h2>
+      <p>Add an additional way to log in to your account.</p>
+      <form id="add-auth-form" method="post">
+        <fieldset class="auth-fieldset">
+          <legend>Select Authentication Method *</legend>
+          <div id="auth-method" class="auth-options">
+            <div class="auth-option">
+              <input
+                type="radio"
+                id="method-password"
+                name="method"
+                value="Password"
+              />
+              <label for="method-password">
+                <span class="option-title">Password</span>
+                <span class="option-desc">Set a new password for your account</span>
+              </label>
+            </div>
+            <div id="password-container-auth" class="password-auth-container" hidden>
+              <label for="new-password-auth"><b>New Password *</b></label>
+              <small>Password must be at least 8 characters long.</small>
+              <input
+                type="password"
+                id="new-password-auth"
+                name="password"
+                minlength="8"
+                placeholder="At least 8 characters"
+              />
+            </div>
+            <div class="auth-option">
+              <input
+                type="radio"
+                id="method-magic-link"
+                name="method"
+                value="Magic Link"
+              />
+              <label for="method-magic-link">
+                <span class="option-title">Magic Link</span>
+                <span class="option-desc">Passwordless login via email link</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+        <button type="submit" class="submit-btn">Add Authentication Method</button>
+      </form>
+      <div id="add-auth-message" class="message"></div>
+    </section>
+  
+    <!-- MINDFUL AUTH SCRIPTS. DO NOT DELETE-->
+  <script src="https://cdn.mindfulauth.com/astro/security.js"></script>
+  </ProtectedLayout>

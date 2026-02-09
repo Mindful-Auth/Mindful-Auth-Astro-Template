@@ -1,0 +1,17 @@
+---
+// Email Verified redirect page
+import AuthLayout from "@/layouts/AuthLayout.astro";
+---
+
+<AuthLayout title="Email Verified">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>Email Verification</h1>
+            <div id="verify-message">Verifying your email...</div>
+            <a id="login-link" href="/login" style="display: none;">Continue to Login</a>
+
+            <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
+            <script src="https://cdn.mindfulauth.com/astro/verify-email.js"></script>
+        </div>
+    </div>
+</AuthLayout>

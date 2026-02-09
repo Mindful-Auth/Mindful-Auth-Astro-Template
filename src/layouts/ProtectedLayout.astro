@@ -1,0 +1,50 @@
+---
+// Layout for protected pages (dashboard, security settings, etc.)
+import '../styles/global.css';
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description = 'Secure Portal' } = Astro.props;
+const recordId = Astro.locals.recordId;
+
+// recordId is validated by middleware
+// This is a safety check in case someone uses this layout incorrectly
+if (!recordId) {
+    return Astro.redirect('/login');
+}
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={description}>
+    <title>{title}</title>
+    
+    <!-- Mindful Auth main script (handles logout, etc.) DO NOT REMOVE-->
+    <script src="https://cdn.mindfulauth.com/astro/main.js"></script>
+
+</head>
+<body>
+    <div class="protected-container">
+        <nav class="nav-bar">
+            <div>
+                <a href={`/${recordId}/dashboard`} class="nav-brand">YOUR BUSINESS NAME</a>
+            </div>
+            <div>
+            <div class="nav-right">
+                <span class="nav-user"><a href={`/${recordId}/dashboard`}>Dashboard</a></span>
+                <a href={`/${recordId}`}>Profile</a>
+                <button id="logout-button" class="nav-logout">Sign Out</button>
+            </div>
+        </nav>
+        <main class="main-content">
+            <slot />
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+---
+import ProtectedLayout from "@/layouts/ProtectedLayout.astro";
+
+const recordId = Astro.locals.recordId;
+
+if (!recordId) {
+  throw new Error("Not authenticated. Data missing.");
+}
+
+---
+<!-- This page url would be /{recordId}/{page}/sample -->
+ 
+<ProtectedLayout title="Sample Page">
+    <section class="content-card">
+        <h2>Example page</h2>
+        <p>URL:<code>/[memberid]/some-page/sample</code></p>
+        <p>Your Member ID: <code>{recordId}</code></p>
+    </section>
+</ProtectedLayout>    

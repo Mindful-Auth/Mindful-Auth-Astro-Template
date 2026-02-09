@@ -1,0 +1,45 @@
+---
+// Magic Link Verification page
+import AuthLayout from "@/layouts/AuthLayout.astro";
+---
+
+<AuthLayout title="Verify Magic Link">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>Verify Magic Link</h1>
+            <div id="verify-magic-link-message">
+                Bot protection failed to load. Please refresh the page.
+            </div>
+
+            <form id="verify-magic-link-form" method="post">
+                <div id="2fa-code-container-magic-link" hidden>
+                    <label for="2fa-code-magic-link"
+                        >Two-Factor Authentication Code</label
+                    >
+                    <input
+                        type="text"
+                        id="2fa-code-magic-link"
+                        name="2fa-code-magic-link"
+                        inputmode="numeric"
+                        pattern="[0-9]{6}"
+                        maxlength="6"
+                        placeholder="Enter 6-digit code"
+                    />
+                    <small
+                        >Enter the 6-digit code from your authenticator app.</small
+                    >
+                </div>
+                <div id="turnstile-container"></div>
+                <button type="submit">Verify &amp; Sign In</button>
+            </form>
+
+            <div id="footer-link">
+                <a href="/magic-login">Request a new magic link</a>
+            </div>
+
+            <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
+            <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"></script>
+            <script src="https://cdn.mindfulauth.com/astro/verify-magic-link.js"></script>
+        </div>
+    </div>
+</AuthLayout>

@@ -1,0 +1,36 @@
+---
+// Magic Link Registration page
+import AuthLayout from '@/layouts/AuthLayout.astro';
+---
+
+<AuthLayout title="Create Account with Magic Link">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>Create Your Account</h1>
+    <p>Enter your details to get started with magic link authentication.</p>
+    
+    <form id="magic-login-form" method="post">
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="magic-login-email">Email</label>
+            <input type="email" id="magic-login-email" name="email" required>
+        </div>
+        <div id="turnstile-container"></div>
+        <button type="submit">Create Account</button>
+        <div id="magic-login-message"></div>
+    </form>
+    
+    <div class="auth-links">
+        <a href="/magic-login">Already have an account? Sign In</a>
+        <a href="/register">Register with Password</a>
+    </div>
+    
+    <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
+    <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"></script>
+    <script src="https://cdn.mindfulauth.com/astro/magic-register.js"></script>
+    </div>
+    </div>
+</AuthLayout>
