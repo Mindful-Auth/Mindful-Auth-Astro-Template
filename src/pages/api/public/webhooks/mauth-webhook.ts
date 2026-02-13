@@ -2,7 +2,7 @@
 // Receives webhook events and sends transactional emails via Postmark.
 // Create an account at https://www.postmarkapp.com/?via=mindfulauth (affiliate link).
 //
-// Webhook URL: https://app.yourdomain.com/api/mauth-webhook
+// Webhook URL: https://app.yourdomain.com/api/public/webhooks/mauth-webhook
 // Configure this URL in Mindful Auth to receive webhook events
 //
 // Required environment variables
@@ -46,19 +46,28 @@ type WebhookPayload = PasswordResetPayload | VerifyEmailPayload | MagicLoginPayl
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
-    // ── Env vars
+    // ── Environment variables ──
     const env = (locals as any).runtime?.env ?? {};
     const POSTMARK_API_TOKEN: string | undefined = env.POSTMARK_API_TOKEN;
     const EMAIL_FROM: string | undefined = env.EMAIL_FROM;
 
     if (!POSTMARK_API_TOKEN || !EMAIL_FROM) {
-      console.error('Missing required env vars: POSTMARK_API_TOKEN and/or EMAIL_FROM');
+      console.error('[Webhook] Missing required env vars: POSTMARK_API_TOKEN and/or EMAIL_FROM');
       return new Response(JSON.stringify({ error: 'Server misconfigured' }), { status: 500 });
     }
 
     // ── Parse payload ──
     const payload: WebhookPayload = await request.json();
     const { event_type, email, name } = payload;
+
+    // ── Log payload (main webhook event) ──
+    console.info('[Webhook Received]', {
+      event_type,
+      email,
+      name,
+      recordid: payload.recordid,
+      payload,
+    });
 
     // ── Dispatch by event type ──
     switch (event_type) {
@@ -90,10 +99,23 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     return new Response(JSON.stringify({ received: true }), { status: 200 });
   } catch (err) {
-    console.error('Webhook processing error:', err);
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    console.error('[Webhook Error]:', errorMessage);
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
+      JSON.stringify({ error: 'Internal server error', details: errorMessage }),
       { status: 500 },
     );
   }
+};
+
+// GET handler for testing endpoint accessibility
+export const GET: APIRoute = async () => {
+  return new Response(JSON.stringify({ 
+    status: 'Webhook endpoint is active',
+    method: 'POST',
+    note: 'This endpoint accepts POST requests from Mindful Auth'
+  }), { 
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  });
 };
