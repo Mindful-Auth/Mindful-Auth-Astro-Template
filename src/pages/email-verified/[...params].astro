@@ -7,11 +7,16 @@ import AuthLayout from "@/layouts/AuthLayout.astro";
     <div class="auth-container">
         <div class="auth-card">
             <h1>Email Verification</h1>
-            <div id="verify-message">Verifying your email...</div>
-            <a id="login-link" href="/login" style="display: none;">Continue to Login</a>
+            <div data-mindfulauth-field="message">Verifying your email...</div>
+            <a
+                href="/login"
+                style="display: none;"
+                data-mindfulauth-action="login">Continue to Login</a
+            >
 
             <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
-            <script src="https://cdn.mindfulauth.com/astro/verify-email.js"></script>
+            <script src="https://cdn.mindfulauth.com/astro/verify-email.js"
+            ></script>
         </div>
     </div>
 </AuthLayout>

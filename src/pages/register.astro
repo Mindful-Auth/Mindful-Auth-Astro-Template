@@ -1,44 +1,66 @@
 ---
 // Register page - Password registration
-import AuthLayout from '@/layouts/AuthLayout.astro';
+import AuthLayout from "@/layouts/AuthLayout.astro";
 ---
 
 <AuthLayout title="Create Account">
     <div class="auth-container">
         <div class="auth-card">
             <h1>Create New Account</h1>
-    <p>Enter your name, email and password to get started.</p>
-    
-    <form id="register-form" method="post">
-        <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+            <p>Enter your name, email and password to get started.</p>
+
+            <form method="post" data-mindfulauth-form="register">
+                <div>
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        required
+                        data-mindfulauth-field="name"
+                    />
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        required
+                        data-mindfulauth-field="email"
+                    />
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        required
+                        data-mindfulauth-field="password"
+                    />
+                </div>
+                <div>
+                    <label>Confirm Password</label>
+                    <input
+                        type="password"
+                        name="confirm-password"
+                        required
+                        data-mindfulauth-field="confirm-password"
+                    />
+                </div>
+                <div data-mindfulauth-turnstile></div>
+                <p data-mindfulauth-field="message"></p>
+                <button type="submit">Create Account</button>
+            </form>
+
+            <div class="auth-links">
+                <a href="/login">Already have an account? Sign In</a>
+                <a href="/magic-register">Register with Magic Link</a>
+            </div>
+
+            <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
+            <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"
+            ></script>
+            <script src="https://cdn.mindfulauth.com/astro/register-password.js"
+            ></script>
         </div>
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div>
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
-        </div>
-        <div id="turnstile-container"></div>
-        <p id="register-message"></p>
-        <button type="submit">Create Account</button>
-    </form>
-    
-    <div class="auth-links">
-        <a href="/login">Already have an account? Sign In</a>
-        <a href="/magic-register">Register with Magic Link</a>
-    </div>
-    
-    <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
-    <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"></script>
-    <script src="https://cdn.mindfulauth.com/astro/register-password.js"></script>
-    </div>
     </div>
 </AuthLayout>

@@ -7,29 +7,27 @@ import AuthLayout from "@/layouts/AuthLayout.astro";
     <div class="auth-container">
         <div class="auth-card">
             <h1>Verify Magic Link</h1>
-            <div id="verify-magic-link-message">
+            <div data-mindfulauth-field="message">
                 Bot protection failed to load. Please refresh the page.
             </div>
 
-            <form id="verify-magic-link-form" method="post">
-                <div id="twofa-code-container-magic-link" hidden>
-                    <label for="twofa-code-magic-link"
-                        >Two-Factor Authentication Code</label
-                    >
+            <form method="post" data-mindfulauth-form="verify-magic-link">
+                <div hidden data-mindfulauth-field="twofa-container">
+                    <label>Two-Factor Authentication Code</label>
                     <input
                         type="text"
-                        id="twofa-code-magic-link"
                         name="twofa-code-magic-link"
                         inputmode="numeric"
                         pattern="[0-9]{6}"
                         maxlength="6"
                         placeholder="Enter 6-digit code"
+                        data-mindfulauth-field="twofa-code"
                     />
                     <small
                         >Enter the 6-digit code from your authenticator app.</small
                     >
                 </div>
-                <div id="turnstile-container"></div>
+                <div data-mindfulauth-turnstile></div>
                 <button type="submit">Verify &amp; Sign In</button>
             </form>
 
@@ -38,8 +36,10 @@ import AuthLayout from "@/layouts/AuthLayout.astro";
             </div>
 
             <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
-            <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"></script>
-            <script src="https://cdn.mindfulauth.com/astro/verify-magic-link.js"></script>
+            <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"
+            ></script>
+            <script src="https://cdn.mindfulauth.com/astro/verify-magic-link.js"
+            ></script>
         </div>
     </div>
 </AuthLayout>

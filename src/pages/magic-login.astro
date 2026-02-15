@@ -1,32 +1,40 @@
 ---
 // Magic Link Login page
-import AuthLayout from '@/layouts/AuthLayout.astro';
+import AuthLayout from "@/layouts/AuthLayout.astro";
 ---
 
 <AuthLayout title="Sign In with Magic Link">
     <div class="auth-container">
         <div class="auth-card">
             <h1>Sign In with Magic Link</h1>
-    <p>We'll send you a magic link to sign in instantly.</p>
-    
-    <form id="magic-login-form" method="post">
-        <div>
-            <label for="magic-login-email">Email</label>
-            <input type="email" id="magic-login-email" name="email" placeholder="your@email.com" required>
+            <p>We'll send you a magic link to sign in instantly.</p>
+
+            <form method="post" data-mindfulauth-form="magic-login">
+                <div>
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="your@email.com"
+                        required
+                        data-mindfulauth-field="email"
+                    />
+                </div>
+                <div data-mindfulauth-turnstile></div>
+                <button type="submit">Send Magic Link</button>
+                <div data-mindfulauth-field="message"></div>
+            </form>
+
+            <div class="auth-links">
+                <a href="/login">Sign In with Password</a>
+                <a href="/magic-register">Create an Account</a>
+            </div>
+
+            <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
+            <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"
+            ></script>
+            <script src="https://cdn.mindfulauth.com/astro/magic-login.js"
+            ></script>
         </div>
-        <div id="turnstile-container"></div>
-        <button type="submit">Send Magic Link</button>
-        <div id="magic-login-message"></div>
-    </form>
-    
-    <div class="auth-links">
-        <a href="/login">Sign In with Password</a>
-        <a href="/magic-register">Create an Account</a>
-    </div>
-    
-    <!-- MINDFUL AUTH CDN SCRIPTS. DO NOT DELETE -->
-    <script src="https://cdn.mindfulauth.com/astro/turnstile-init.js"></script>
-    <script src="https://cdn.mindfulauth.com/astro/magic-login.js"></script>
-    </div>
     </div>
 </AuthLayout>
