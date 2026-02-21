@@ -9,12 +9,6 @@ interface Props {
 
 const { title, description = 'Secure Portal' } = Astro.props;
 const recordId = Astro.locals.recordId;
-
-// recordId is validated by middleware
-// This is a safety check in case someone uses this layout incorrectly
-if (!recordId) {
-    return Astro.redirect('/login');
-}
 ---
 
 <!DOCTYPE html>
