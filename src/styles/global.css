@@ -423,3 +423,7 @@ form button {
 .hidden {
     display: none;
 }
+
+.login-link {
+    display: none;
+}
