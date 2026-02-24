@@ -5,14 +5,22 @@ import { mauthSecurityConfig, getMauthViteDefines } from '@mindfulauth/core/conf
 
 // Configure Mindful Auth security settings
 const mauthCfg = mauthSecurityConfig({
-    skipAssets: [],
-    csp: {
-        scriptSources: [],
-        connectSources: [],
-        frameSources: [],
-        fontSources: []
-    }
-});
+       skipAssets: [],
+       csp: {
+         scriptSources: [],
+         connectSources: [],
+         frameSources: [],
+         fontSources: [],
+         styleSources: [],
+         imageSources: [],
+         frameAncestors: [],
+         workerSources: [],
+         manifestSources: [],
+         objectSources: [],
+         baseUris: [],
+         formActions: []
+       }
+     });
 
 // Export the Astro configuration
 export default defineConfig({

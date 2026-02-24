@@ -269,10 +269,6 @@ form button {
     width: 100%;
 }
 
-#enable-2fa-btn {
-    width: auto;
-}
-
 .btn-danger {
     background-color: #dc3545;
 }
@@ -421,4 +417,9 @@ form button {
     background: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
+}
+
+/* UTILITY CLASSES */
+.hidden {
+    display: none;
 }
